@@ -1,6 +1,6 @@
 {
   "name": "mofron-parts-frame",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "frame parts of mofron",
   "main": "index.js",
   "scripts": {
