@@ -1,10 +1,10 @@
 /**
- * @file   Frame.js
- * @brief  Base UI Frame class
+ * @file   frame.js
+ * @brief  frame component class
  * @author simpart
  */
 
-mofron.parts.Frame = class extends mofron.parts.Base {
+mofron.comp.Frame = class extends mofron.comp.Base {
     
     getTarget () {
         try {

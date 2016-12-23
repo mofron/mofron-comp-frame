@@ -1,17 +1,17 @@
 {
-  "name": "mofron-parts-frame",
-  "version": "0.0.3",
-  "description": "frame parts of mofron",
+  "name": "mofron-comp-frame",
+  "version": "0.0.4",
+  "description": "frame component for mofron",
   "main": "dist/frame.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "mofron": "^0.1.11"
+    "mofron": "^0.1.15"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simpart/mofron-parts-frame.git"
+    "url": "git+https://github.com/simpart/mofron-comp-frame.git"
   },
   "keywords": [
     "mofron"
@@ -19,9 +19,9 @@
   "author": "simparts",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/simpart/mofron-parts-frame/issues"
+    "url": "https://github.com/simpart/mofron-comp-frame/issues"
   },
-  "homepage": "https://github.com/simpart/mofron-parts-frame#readme",
+  "homepage": "https://github.com/simpart/mofron-comp-frame#readme",
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",

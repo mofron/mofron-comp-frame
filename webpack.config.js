@@ -1,5 +1,5 @@
 module.exports = {
-    entry: __dirname + '/src/parts.js',
+    entry: __dirname + '/src/frame.js',
     output: {
         path: __dirname + '/dist',
         filename: 'frame.js'

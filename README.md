@@ -1,1 +1,2 @@
-# mofron-parts-frame
+# mofron-comp-frame
+frame component for mofron
