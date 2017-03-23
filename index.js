@@ -10,17 +10,12 @@ require('mofron-effect-shadow');
  * @brief frame component class
  */
 mofron.comp.Frame = class extends mofron.Component {
-    /**
-     * initialize frame component
-     *
-     * @param prm_opt : (obujct) [0]-> height size, [1]-> width size
-     */
-    constructor (prm_opt) {
+    
+    constructor (phei, wid) {
         try {
             super();
-            this.name('Frame');
-
-            this.prmOpt(prm_opt);
+            this.prmOpt(('number' === typeof wid) ? {param : [phei, wid]} : phei);
+            this.vdom();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -34,13 +29,16 @@ mofron.comp.Frame = class extends mofron.Component {
      */
     initDomConts (prm) {
         try {
-            var frm = new mofron.Dom('div',this);
-            this.vdom().addChild(frm);
-            this.target(frm);
+            this.name('Frame');
             
-            this.style('border', 'solid 1px black');
+            /* dom contents */
+            this.vdom().addChild(new mofron.Dom('div',this));
             
-            if ((null !== prm) && ('object' === (typeof prm))) {
+            /* configure style */
+            this.style({'border' : 'solid 1px black'});
+            
+            /* size setting */
+            if ( (null !== prm) && ('object' === typeof prm) ) {
                 this.size(prm[0], prm[1]);
             } else {
                 this.size(100, 100);
@@ -53,25 +51,18 @@ mofron.comp.Frame = class extends mofron.Component {
     
     size (hei, wid) {
         try {
-            var _hei  = (hei === undefined) ? null : hei;
-            var _wid  = (wid === undefined) ? null : wid;
-            
-            if ( (null === _hei) &&
-                 (null === _wid)) {
+            if (undefined === hei) {
+                /* getter */
                 return [
-                    this.style('height'),
-                    this.style('width')
+                    mofron.func.getLength(this.style('height')),
+                    mofron.func.getLength(this.style('width'))
                 ];
             }
-            
-            if ( ('number' != (typeof _hei)) ||
-                 ('number' != (typeof _wid)) ) {
-                throw new Error('invalid parameter');
-            }
-            
-            this.style('height', _hei + 'px');
-            this.style('width' , _wid + 'px');
-            this.border
+            /* setter */
+            this.style({
+                'height' : ('number' === typeof hei) ? (hei + 'px') : hei,
+                'width'  : ('number' === typeof wid) ? (wid + 'px') : wid
+            });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -88,36 +79,7 @@ mofron.comp.Frame = class extends mofron.Component {
             if (false === mofron.func.isObject(clr,'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style('background', clr.getStyle());
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    border (wid,clr) {
-        try {
-            if (undefined === wid) {
-                /* getter */
-                return new Array(
-                               this.style('border-width'),
-                               mofron.func.getColor(this.style('border-color'))
-                           );
-            }
-            /* setter */
-            if (null !== wid) {
-                if ('number' !== typeof wid) {
-                    throw new Error('invalid parameter');
-                }
-                this.style('border-width', wid + 'px');
-            }
-            
-            if (undefined !== clr) {
-                if (false === mofron.func.isObject(clr,'Color')) {
-                    throw new Error('invalid paramter');
-                }
-                this.style('border-color', clr.getStyle());
-            }
+            this.style({'background' : clr.getStyle()});
         } catch (e) {
             console.error(e.stack);
             throw e;
