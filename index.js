@@ -35,7 +35,10 @@ mofron.comp.Frame = class extends mofron.Component {
             this.vdom().addChild(new mofron.Dom('div',this));
             
             /* configure style */
-            this.style({'border' : 'solid 1px black'});
+            this.style({
+                'border'       : 'solid 1px',
+                'border-color' : new mofron.Color(190,190,190).getStyle()
+            });
             
             /* size setting */
             if ( (null !== prm) && ('object' === typeof prm) ) {
