@@ -15,7 +15,6 @@ mofron.comp.Frame = class extends mofron.Component {
         try {
             super();
             this.prmOpt(('number' === typeof wid) ? {param : [phei, wid]} : phei);
-            this.vdom();
         } catch (e) {
             console.error(e.stack);
             throw e;
