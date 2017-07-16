@@ -14,8 +14,10 @@ mofron.comp.Frame = class extends mofron.Component {
     constructor (phei, wid) {
         try {
             super();
-            this.prmOpt(('number' === typeof wid) ? {param : [phei, wid]} : phei);
-            this.vdom();
+            this.name('Frame');
+            this.prmOpt(
+                ('number' === typeof wid) ? {param : [phei, wid]} : phei
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -29,13 +31,14 @@ mofron.comp.Frame = class extends mofron.Component {
      */
     initDomConts (prm) {
         try {
-            this.name('Frame');
-            
             /* dom contents */
             this.vdom().addChild(new mofron.Dom('div',this));
             
             /* configure style */
-            this.style({'border' : 'solid 1px black'});
+            this.style({
+                'border'       : 'solid 1px',
+                'border-color' : new mofron.Color(190,190,190).getStyle()
+            });
             
             /* size setting */
             if ( (null !== prm) && ('object' === typeof prm) ) {
