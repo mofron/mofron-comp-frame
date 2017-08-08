@@ -2,8 +2,8 @@
  * @file   mofron-comp-frame/index.js
  * @author simpart
  */
-require('mofron-effect-radius');
-require('mofron-effect-shadow');
+let Redius = require('mofron-effect-radius');
+let Shadow = require('mofron-effect-shadow');
 
 /**
  * @class Frame
@@ -11,12 +11,12 @@ require('mofron-effect-shadow');
  */
 mofron.comp.Frame = class extends mofron.Component {
     
-    constructor (phei, wid) {
+    constructor (x_opt, y) {
         try {
             super();
             this.name('Frame');
             this.prmOpt(
-                ('number' === typeof wid) ? {param : [phei, wid]} : phei
+                ('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt
             );
         } catch (e) {
             console.error(e.stack);
@@ -35,9 +35,11 @@ mofron.comp.Frame = class extends mofron.Component {
             this.vdom().addChild(new mofron.Dom('div',this));
             
             /* configure style */
+            let bd_clr = this.theme().color(0);
             this.style({
                 'border'       : 'solid 1px',
-                'border-color' : new mofron.Color(190,190,190).getStyle()
+                'border-color' : (null === bd_clr) ?
+                                     new mofron.Color(190,190,190).getStyle() : bd_clr.getStyle()
             });
             
             /* size setting */
@@ -52,19 +54,19 @@ mofron.comp.Frame = class extends mofron.Component {
         }
     }
     
-    size (hei, wid) {
+    size (x, y) {
         try {
-            if (undefined === hei) {
+            if (undefined === x) {
                 /* getter */
                 return [
-                    mofron.func.getLength(this.style('height')),
-                    mofron.func.getLength(this.style('width'))
+                    mofron.func.getLength(this.style('width')),
+                    mofron.func.getLength(this.style('height'))
                 ];
             }
             /* setter */
             this.style({
-                'height' : ('number' === typeof hei) ? (hei + 'px') : hei,
-                'width'  : ('number' === typeof wid) ? (wid + 'px') : wid
+                'width'  : ('number' === typeof x) ? (x + 'px') : x,
+                'height' : ('number' === typeof y) ? (y + 'px') : y
             });
         } catch (e) {
             console.error(e.stack);
@@ -76,13 +78,15 @@ mofron.comp.Frame = class extends mofron.Component {
         try {
             if (undefined === clr) {
                 /* getter */
-                return mofron.func.getColor(this.style('background'));
+                return mofron.func.getColor(
+                           this.style('background')
+                       );
             }
             /* setter */
             if (false === mofron.func.isObject(clr,'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style({'background' : clr.getStyle()});
+            this.style({ 'background' : clr.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -91,7 +95,7 @@ mofron.comp.Frame = class extends mofron.Component {
     
     radius (val) {
         try {
-            this.addEffect(new mofron.effect.Radius(val));
+            this.addEffect(new Radius(val));
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -100,7 +104,7 @@ mofron.comp.Frame = class extends mofron.Component {
     
     shadow (val) {
         try {
-            this.addEffect(new mofron.effect.Shadow(val));
+            this.addEffect(new Shadow(val));
         } catch (e) {
             console.error(e.stack);
             throw e;
