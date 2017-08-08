@@ -2,7 +2,7 @@
  * @file   mofron-comp-frame/index.js
  * @author simpart
  */
-let Redius = require('mofron-effect-radius');
+let Radius = require('mofron-effect-radius');
 let Shadow = require('mofron-effect-shadow');
 
 /**
