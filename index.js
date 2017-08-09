@@ -58,10 +58,10 @@ mofron.comp.Frame = class extends mofron.Component {
         try {
             if (undefined === x) {
                 /* getter */
-                return [
-                    mofron.func.getLength(this.style('width')),
-                    mofron.func.getLength(this.style('height'))
-                ];
+                return {
+                    width  : mofron.func.getLength(this.style('width')),
+                    height : mofron.func.getLength(this.style('height'))
+                };
             }
             /* setter */
             this.style({
