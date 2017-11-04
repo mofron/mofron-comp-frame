@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-frame",
-  "version": "0.6.8",
+  "version": "0.7.0",
   "description": "frame component for mofron",
   "main": "index.js",
   "scripts": {
@@ -8,21 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simpart/mofron-comp-frame.git"
+    "url": "git+https://github.com/mofron/mofron-comp-frame.git"
   },
   "dependencies": {
     "mofron-effect-radius": "",
     "mofron-effect-shadow": ""
   },
   "keywords": [
-    "mofron"
+    "front-end"
   ],
   "author": "simparts",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/simpart/mofron-comp-frame/issues"
+    "url": "https://github.com/mofron/mofron-comp-frame/issues"
   },
-  "homepage": "https://github.com/simpart/mofron-comp-frame#readme",
+  "homepage": "https://github.com/mofron/mofron-comp-frame#readme",
   "devDependencies": {
   }
 }

@@ -14,8 +14,9 @@ mf.comp.Frame = class extends mf.Component {
     
     constructor (x_opt, y) {
         try {
-            super(('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt);
+            super();
             this.name('Frame');
+            this.prmOpt(('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt));
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -48,26 +49,6 @@ mf.comp.Frame = class extends mf.Component {
             } else {
                 this.size(100, 100);
             }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    size (x, y) {
-        try {
-            if (undefined === x) {
-                /* getter */
-                return {
-                    width  : mofron.func.getLength(this.style('width')),
-                    height : mofron.func.getLength(this.style('height'))
-                };
-            }
-            /* setter */
-            this.style({
-                'width'  : ('number' === typeof x) ? (x + 'px') : x,
-                'height' : ('number' === typeof y) ? (y + 'px') : y
-            });
         } catch (e) {
             console.error(e.stack);
             throw e;
