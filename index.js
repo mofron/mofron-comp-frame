@@ -55,6 +55,18 @@ mf.comp.Frame = class extends mf.Component {
         }
     }
     
+    themeConts () {
+        try {
+            let clr = this.theme().color();
+            if (null !== clr) {
+                this.color(clr);
+            }
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
     color (clr) {
         try {
             if (undefined === clr) {
