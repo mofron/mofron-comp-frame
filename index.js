@@ -16,7 +16,7 @@ mf.comp.Frame = class extends mf.Component {
         try {
             super();
             this.name('Frame');
-            this.prmOpt(('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt));
+            this.prmOpt(('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
