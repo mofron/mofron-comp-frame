@@ -57,7 +57,7 @@ mf.comp.Frame = class extends mf.Component {
     
     themeConts () {
         try {
-            let clr = this.theme().color();
+            let clr = this.theme().color(0);
             if (null !== clr) {
                 this.color(clr);
             }
@@ -71,12 +71,12 @@ mf.comp.Frame = class extends mf.Component {
         try {
             if (undefined === clr) {
                 /* getter */
-                return mofron.func.getColor(
+                return mf.func.getColor(
                            this.style('background')
                        );
             }
             /* setter */
-            if (false === mofron.func.isObject(clr,'Color')) {
+            if (false === mf.func.isObject(clr,'Color')) {
                 throw new Error('invalid parameter');
             }
             this.style({ 'background' : clr.getStyle() });
