@@ -36,9 +36,10 @@ mf.comp.Frame = class extends mf.Component {
             /* configure style */
             let bd_clr = this.theme().color(0);
             this.style({
-                'border'       : 'solid 1px',
+                'border'       : 'solid',
                 'border-color' : (null === bd_clr) ?
-                                     new mofron.Color(190,190,190).getStyle() : bd_clr.getStyle()
+                                     new mofron.Color(190,190,190).getStyle() : bd_clr.getStyle(),
+                'border-width' : '1px'
             });
             
             /* size setting */
