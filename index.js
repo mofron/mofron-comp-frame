@@ -12,26 +12,15 @@ let Shadow = require('mofron-effect-shadow');
  */
 mf.comp.Frame = class extends mf.Component {
     
-    constructor (x_opt, y) {
-        try {
-            super();
-            this.name('Frame');
-            this.prmOpt(('number' === typeof x_opt) ? {param : [x_opt, y]} : x_opt);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
     /**
      * initialize contents
      * 
      * @param disp : (bool) visible flag
      */
-    initDomConts (prm) {
+    initDomConts (x, y) {
         try {
-            /* dom contents */
-            this.adom().addChild(new mf.Dom('div',this));
+            this.name('Frame');
+            super.initDomConts();
             
             /* configure style */
             let bd_clr = this.theme().color(0);
@@ -43,11 +32,10 @@ mf.comp.Frame = class extends mf.Component {
             });
             
             /* size setting */
-            if ( (null !== prm) &&
-                 ('object'  === typeof prm) &&
-                 (undefined !== prm[0]) ) {
-                this.size(prm[0], prm[1]);
+            if (undefined !== x) {
+                this.size(x, y);
             } else {
+                /* this size is default size */
                 this.size(100, 100);
             }
         } catch (e) {
@@ -104,6 +92,23 @@ mf.comp.Frame = class extends mf.Component {
             throw e;
         }
     }
+    
+    width (val) {
+        try {
+            super.width(val-2);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    height (val) {
+        try {
+            super.height(val-2);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
 }
-mofron.comp.frame = {};
 module.exports = mofron.comp.Frame;
