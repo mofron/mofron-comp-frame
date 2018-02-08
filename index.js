@@ -95,7 +95,9 @@ mf.comp.Frame = class extends mf.Component {
     
     width (val) {
         try {
-            super.width(val-2);
+            super.width(
+                ('number' === typeof val)? val-2 : val
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -104,7 +106,9 @@ mf.comp.Frame = class extends mf.Component {
     
     height (val) {
         try {
-            super.height(val-2);
+            super.height(
+                ('number' === typeof val)? val-2 : val
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -112,3 +116,4 @@ mf.comp.Frame = class extends mf.Component {
     }
 }
 module.exports = mofron.comp.Frame;
+/* end of file */
