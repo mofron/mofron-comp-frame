@@ -11,6 +11,16 @@ let Shadow = require('mofron-effect-shadow');
  * @brief frame component class
  */
 mf.comp.Frame = class extends mf.Component {
+    constructor (xo, y) {
+        try {
+            super();
+            this.name('Frame');
+            this.prmOpt(xo, y);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
     
     /**
      * initialize contents
@@ -19,7 +29,6 @@ mf.comp.Frame = class extends mf.Component {
      */
     initDomConts (x, y) {
         try {
-            this.name('Frame');
             super.initDomConts();
             
             /* configure style */
@@ -95,7 +104,7 @@ mf.comp.Frame = class extends mf.Component {
     
     width (val) {
         try {
-            super.width(
+            return super.width(
                 ('number' === typeof val)? val-2 : val
             );
         } catch (e) {
@@ -106,7 +115,7 @@ mf.comp.Frame = class extends mf.Component {
     
     height (val) {
         try {
-            super.height(
+            return super.height(
                 ('number' === typeof val)? val-2 : val
             );
         } catch (e) {
