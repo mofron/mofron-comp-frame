@@ -65,19 +65,19 @@ mf.comp.Frame = class extends mf.Component {
         }
     }
     
-    color (clr) {
+    color (bgd, bdr) {
         try {
-            if (undefined === clr) {
-                /* getter */
-                return mf.func.getColor(
-                           this.style('background')
-                       );
+            let ret = super.color(bgd);
+            if (undefined !== bdr) {
+                /* set border color */
+                if (true !== mf.func.isInclude(bdr, 'Color')) {
+                    throw new Error('invalid parameter');
+                }
+                this.style({
+                    'border-color' : bdr.getStyle()
+                });
             }
-            /* setter */
-            if (false === mf.func.isObject(clr,'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.style({ 'background' : clr.getStyle() });
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
