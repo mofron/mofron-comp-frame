@@ -39,7 +39,7 @@ mf.comp.Frame = class extends mf.Component {
             
             /* set default option */
             this.size(100, 100);
-            this.mainColor(new mofron.Color(190,190,190));
+            this.accentColor(new mofron.Color(190,190,190));
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -47,6 +47,25 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     mainColor (prm) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return mf.func.getColor(this.style('background'));
+            }
+            /* setter */
+            if (true !== mf.func.isInclude(prm, 'Color')) {
+                throw new Error('invalid parameter');
+            }
+            this.style({
+                'background' : prm.getStyle()
+            });
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    accentColor (prm) {
         try {
             if (undefined === prm) {
                 /* getter */
@@ -64,6 +83,8 @@ mf.comp.Frame = class extends mf.Component {
             throw e;
         }
     }
+    
+    baseColor () {}
     
     radius (val) {
         try {
