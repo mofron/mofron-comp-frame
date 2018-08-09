@@ -15,6 +15,7 @@ mf.comp.Frame = class extends mf.Component {
         try {
             super();
             this.name('Frame');
+            this.sizeType('rem');
             this.prmMap('width', 'height');
             this.prmOpt(po, p2);
         } catch (e) {
@@ -34,11 +35,11 @@ mf.comp.Frame = class extends mf.Component {
             /* configure style */
             this.style({
                 'border-style' : 'solid',
-                'border-width' : '1px'
             });
+            mf.func.compSize(this, 'border-width', 0.01);
             
             /* set default option */
-            this.size(100, 100);
+            this.size(1, 1);
             this.accentColor(new mofron.Color(190,190,190));
         } catch (e) {
             console.error(e.stack);
@@ -102,28 +103,6 @@ mf.comp.Frame = class extends mf.Component {
                     val,
                     (undefined === clr) ? this.mainColor() : clr
                 )
-            );
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    width (val) {
-        try {
-            return super.width(
-                ('number' === typeof val)? val-2 : val
-            );
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    height (val) {
-        try {
-            return super.height(
-                ('number' === typeof val)? val-2 : val
             );
         } catch (e) {
             console.error(e.stack);
