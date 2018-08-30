@@ -5,7 +5,6 @@
 const mf     = require('mofron');
 const Radius = require('mofron-effect-radius');
 const Shadow = require('mofron-effect-shadow');
-
 /**
  * @class Frame
  * @brief frame component class
@@ -15,7 +14,6 @@ mf.comp.Frame = class extends mf.Component {
         try {
             super();
             this.name('Frame');
-            this.sizeType('rem');
             this.prmMap('width', 'height');
             this.prmOpt(po, p2);
         } catch (e) {
@@ -33,13 +31,11 @@ mf.comp.Frame = class extends mf.Component {
             super.initDomConts();
             
             /* configure style */
-            this.style({
-                'border-style' : 'solid',
-            });
-            mf.func.compSize(this, 'border-width', 0.01);
+            this.style({ 'border-style' : 'solid' });
+            this.sizeValue('border-width', '0.01rem');
             
             /* set default option */
-            this.size(1, 1);
+            this.size('1rem', '1rem');
             this.accentColor(new mofron.Color(190,190,190));
         } catch (e) {
             console.error(e.stack);
@@ -57,9 +53,7 @@ mf.comp.Frame = class extends mf.Component {
             if (true !== mf.func.isInclude(prm, 'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style({
-                'background' : prm.getStyle()
-            });
+            this.style({ 'background' : prm.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -76,9 +70,7 @@ mf.comp.Frame = class extends mf.Component {
             if (true !== mf.func.isInclude(prm, 'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style({
-                'border-color' : prm.getStyle()
-            });
+            this.style({ 'border-color' : prm.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -88,23 +80,14 @@ mf.comp.Frame = class extends mf.Component {
     baseColor () {}
     
     radius (val) {
-        try {
-            this.addEffect(new Radius(val));
-        } catch (e) {
+        try { this.effect([ new Radius(val) ]); } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
     shadow (val, clr) {
-        try {
-            this.addEffect(
-                new Shadow(
-                    val,
-                    (undefined === clr) ? this.mainColor() : clr
-                )
-            );
-        } catch (e) {
+        try { this.effect([ new Shadow(val, clr) ]); } catch (e) {
             console.error(e.stack);
             throw e;
         }
