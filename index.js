@@ -92,6 +92,44 @@ mf.comp.Frame = class extends mf.Component {
             throw e;
         }
     }
+    
+    width (prm) {
+        try {
+            let ret = super.width(prm);
+            if (undefined === ret) {
+                let bwid = this.sizeValue('border-width');
+                if (null === bwid) {
+                    return;
+                }
+                super.width(
+                    mf.func.sizeSum(this.width(), '-' + (bwid.value()*2) + bwid.type())
+                );
+            }
+            return ret;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    height (prm) {
+        try {
+            let ret = super.height(prm);
+            if (undefined === ret) {
+                let bwid = this.sizeValue('border-width');
+                if (null === bwid) {
+                    return;
+                }
+                super.height(
+                    mf.func.sizeSum(this.height(), '-' + (bwid.value()*2) + bwid.type())
+                );
+            }
+            return ret;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
 }
 module.exports = mofron.comp.Frame;
 /* end of file */
