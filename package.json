@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-frame",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "frame component for mofron",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "mofron-effect-radius": "",
-    "mofron-effect-shadow": ""
+    "mofron-effect-shadow": "",
+    "mofron-effect-border": ""
   },
   "keywords": [
     "front-end"

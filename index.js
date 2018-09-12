@@ -5,6 +5,7 @@
 const mf     = require('mofron');
 const Radius = require('mofron-effect-radius');
 const Shadow = require('mofron-effect-shadow');
+const Border = require('mofron-effect-dev');
 /**
  * @class Frame
  * @brief frame component class
@@ -30,13 +31,11 @@ mf.comp.Frame = class extends mf.Component {
         try {
             super.initDomConts();
             
-            /* configure style */
-            this.style({ 'border-style' : 'solid' });
-            this.sizeValue('border-width', '0.01rem');
+            /* configure border style */
+            this.effect([this.border()]);
             
             /* set default option */
             this.size('1rem', '1rem');
-            this.accentColor(new mofron.Color(190,190,190));
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -88,6 +87,27 @@ mf.comp.Frame = class extends mf.Component {
     
     shadow (val, clr) {
         try { this.effect([ new Shadow(val, clr) ]); } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    border (prm) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                if (undefined === this.m_border) {
+                    this.border(new Border({color : new mf.Color(190,190,190)}));
+                }
+                return this.m_border;
+            }
+            /* setter */
+            if (undefined !== this.m_border) {
+                this.m_border.execOption(prm.getOption());
+                return;
+            }
+            this.m_border = prm;
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
