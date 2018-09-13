@@ -37,7 +37,7 @@ mf.comp.Frame = class extends mf.Component {
             this.target().styleListener(
                 'border-width',
                 (p1,p2,p3) => {
-                    try { p3.size(p3.width(), p3.height()); } catch (e) {
+                    try { p3.size(this.m_width, this.m_height); } catch (e) {
                         console.error(e.stack);
                         throw e;
                     }
@@ -71,17 +71,7 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     accentColor (prm) {
-        try {
-            if (undefined === prm) {
-                /* getter */
-                return mf.func.getColor(this.style('border-color')); 
-            }
-            /* setter */
-            if (true !== mf.func.isInclude(prm, 'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.style({ 'border-color' : prm.getStyle() });
-        } catch (e) {
+        try { return this.border().color(); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -89,15 +79,40 @@ mf.comp.Frame = class extends mf.Component {
     
     baseColor () {}
     
-    radius (val) {
-        try { this.effect([ new Radius(val) ]); } catch (e) {
+    radius (prm) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return (undefined === this.m_radius) ? 0 : this.m_radius.value();
+            }
+            /* setter */
+            if (undefined === this.m_radius) {
+                this.m_radius = new Radius(prm);
+                this.effect([ this.m_radius ]);
+            } else {
+                this.m_radius.value(prm);
+            }
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    shadow (val, clr) {
-        try { this.effect([ new Shadow(val, clr) ]); } catch (e) {
+    shadow (prm, clr) {
+        try { 
+            if (undefined === prm) {
+                /* getter */
+                return (undefined === this.m_shadow) ? 0 : this.m_shadow.value();
+            }
+            /* setter */
+            if (undefined === this.m_shadow) {
+                this.m_shadow = new Shadow(prm, clr);
+                this.effect([ this.m_shadow ]);
+            } else {
+                this.m_shadow.value(prm);
+                this.m_shadow.color(clr);
+            }
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -126,17 +141,10 @@ mf.comp.Frame = class extends mf.Component {
     
     width (prm) {
         try {
-            let ret = super.width(prm);
-            if (undefined === ret) {
-                let bwid = this.sizeValue('border-width');
-                let wid  = super.sizeValue('width');
-                if ( ('px' === wid.type()) || ('rem' === wid.type()) ) {
-                    super.width(
-                        mf.func.sizeDiff(this.width(), (bwid.value()*2) + bwid.type())
-                    );
-                }
+            if (undefined !== prm) {
+                this.m_width = prm;
             }
-            return ret;
+            return (undefined === super.width(prm)) ? this.frmSize(prm, 'width') : super.width(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -145,17 +153,25 @@ mf.comp.Frame = class extends mf.Component {
     
     height (prm) {
         try {
-            let ret = super.height(prm);
-            if (undefined === ret) {
-                let bwid = this.sizeValue('border-width');
-                let hei  = super.sizeValue('height');
-                if ( ('px' === hei.type()) || ('rem' === hei.type()) ) {
-                    super.height(
-                        mf.func.sizeDiff(this.height(), (bwid.value()*2) + bwid.type())
-                    );
-                }
+            if (undefined !== prm) {
+                this.m_height = prm;
             }
-            return ret;
+            return (undefined === super.height(prm)) ? this.frmSize(prm, 'height') : super.height(prm);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    frmSize (prm, tp) {
+        try {
+            let bwid = mf.func.getSizeObj(this.border().width());
+            let val  = this.sizeValue(tp);
+            if ( ('px' === val.type())  ||
+                 ('rem' === val.type()) ||
+                 (val.type() === mf.func.getSizeObj(this.border().width())) ) {
+                    super[tp](val.diff((bwid.value()*2) + bwid.type()));
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
