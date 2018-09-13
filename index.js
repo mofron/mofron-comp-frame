@@ -5,7 +5,7 @@
 const mf     = require('mofron');
 const Radius = require('mofron-effect-radius');
 const Shadow = require('mofron-effect-shadow');
-const Border = require('mofron-effect-dev');
+const Border = require('mofron-effect-border');
 /**
  * @class Frame
  * @brief frame component class
@@ -33,6 +33,17 @@ mf.comp.Frame = class extends mf.Component {
             
             /* configure border style */
             this.effect([this.border()]);
+            
+            this.target().styleListener(
+                'border-width',
+                (p1,p2,p3) => {
+                    try { p3.size(p3.width(), p3.height()); } catch (e) {
+                        console.error(e.stack);
+                        throw e;
+                    }
+                },
+                this
+            );
             
             /* set default option */
             this.size('1rem', '1rem');
@@ -118,12 +129,12 @@ mf.comp.Frame = class extends mf.Component {
             let ret = super.width(prm);
             if (undefined === ret) {
                 let bwid = this.sizeValue('border-width');
-                if (null === bwid) {
-                    return;
+                let wid  = super.sizeValue('width');
+                if ( ('px' === wid.type()) || ('rem' === wid.type()) ) {
+                    super.width(
+                        mf.func.sizeDiff(this.width(), (bwid.value()*2) + bwid.type())
+                    );
                 }
-                super.width(
-                    mf.func.sizeSum(this.width(), '-' + (bwid.value()*2) + bwid.type())
-                );
             }
             return ret;
         } catch (e) {
@@ -137,12 +148,12 @@ mf.comp.Frame = class extends mf.Component {
             let ret = super.height(prm);
             if (undefined === ret) {
                 let bwid = this.sizeValue('border-width');
-                if (null === bwid) {
-                    return;
+                let hei  = super.sizeValue('height');
+                if ( ('px' === hei.type()) || ('rem' === hei.type()) ) {
+                    super.height(
+                        mf.func.sizeDiff(this.height(), (bwid.value()*2) + bwid.type())
+                    );
                 }
-                super.height(
-                    mf.func.sizeSum(this.height(), '-' + (bwid.value()*2) + bwid.type())
-                );
             }
             return ret;
         } catch (e) {
