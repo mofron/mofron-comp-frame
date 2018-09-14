@@ -71,7 +71,7 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     accentColor (prm) {
-        try { return this.border().color(); } catch (e) {
+        try { return this.border().color(prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
