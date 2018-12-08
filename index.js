@@ -102,8 +102,16 @@ mf.comp.Frame = class extends mf.Component {
      * @param p1 (undefined) call as getter
      * @return (string) radius value
      */
-    radius (prm) {
-        try { return this.effect('Radius').value(prm); } catch (e) {
+    radius (val, tp) {
+        try {
+            let radi = this.effect('Radius');
+            if (undefined === val) {
+                /* getter */
+                return [ radi.value(), radi.type() ];
+            }
+            radi.value(val);
+            radi.type(tp);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
