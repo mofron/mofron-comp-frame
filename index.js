@@ -147,7 +147,18 @@ mf.comp.Frame = class extends mf.Component {
      * setter/getter frame width
      */
     width (prm) {
-        try { return super.width(this.frmSize(prm)); } catch (e) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return super.width();
+            }
+            /* setter */
+            let fsiz = mf.func.getSize(this.frmSize(prm));
+            if (0 > fsiz.value()) {
+                fsiz.value(0);
+            }
+            return super.width(fsiz.toString());
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -157,7 +168,18 @@ mf.comp.Frame = class extends mf.Component {
      * setter/getter frame height
      */
     height (prm) {
-        try { return super.height(this.frmSize(prm)); } catch (e) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return super.height();
+            }
+            /* setter */
+            let fsiz = mf.func.getSize(this.frmSize(prm));
+            if (0 > fsiz.value()) {
+                fsiz.value(0);
+            }
+            return super.height(fsiz.toString());
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
