@@ -93,8 +93,6 @@ mf.comp.Frame = class extends mf.Component {
         }
     }
     
-    baseColor () {}
-    
     /**
      * setter/getter radius value
      *
@@ -153,6 +151,10 @@ mf.comp.Frame = class extends mf.Component {
                 return super.width();
             }
             /* setter */
+            if (null === prm) {
+                super.width(prm);
+                return;
+            }
             let fsiz = mf.func.getSize(this.frmSize(prm));
             if (0 > fsiz.value()) {
                 fsiz.value(0);
@@ -174,6 +176,10 @@ mf.comp.Frame = class extends mf.Component {
                 return super.height();
             }
             /* setter */
+            if (null === prm) {
+                super.height(prm);
+                return;
+            }
             let fsiz = mf.func.getSize(this.frmSize(prm));
             if (0 > fsiz.value()) {
                 fsiz.value(0);
