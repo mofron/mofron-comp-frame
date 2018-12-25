@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-frame",
-  "version": "0.10.10",
+  "version": "0.10.11",
   "description": "frame component for mofron",
   "main": "index.js",
   "scripts": {

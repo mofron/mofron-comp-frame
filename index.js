@@ -87,7 +87,10 @@ mf.comp.Frame = class extends mf.Component {
      * @return (string) color css value
      */
     accentColor (prm) {
-        try { return this.border().color(prm); } catch (e) {
+        try {
+            let ret = this.border().color(prm);
+            return (undefined !== ret) ? ret[0] : ret;
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -206,7 +209,7 @@ mf.comp.Frame = class extends mf.Component {
             if ( (null === siz) || ( ('px' !== siz.type()) && ('rem' !== siz.type()) ) ) {
                 return prm;
             }
-            let bwid = this.border().width();
+            let bwid = this.border().width()[0];
             return mf.func.sizeDiff(
                 prm,
                 mf.func.sizeSum(bwid, bwid)
