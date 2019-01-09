@@ -210,10 +210,12 @@ mf.comp.Frame = class extends mf.Component {
                 return prm;
             }
             let bwid = this.border().width()[0];
-            return mf.func.sizeDiff(
-                prm,
-                mf.func.sizeSum(bwid, bwid)
-            );
+            
+            try {
+                return mf.func.sizeDiff(prm,mf.func.sizeSum(bwid, bwid));
+            } catch (e) {
+                return prm;
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
