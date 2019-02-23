@@ -39,9 +39,9 @@ mf.comp.Frame = class extends mf.Component {
             
             /* configure border style */
             this.effect([
-                new Border('0.01rem', [190,190,190]),
-                new Radius({ value : '0rem' }),
-                new Shadow({ value : '0rem' })
+                new Border({ value: '0.01rem', color: [190,190,190], tag: 'init' }),
+                new Radius({ value: '0rem', tag: 'init' }),
+                new Shadow({ value: '0rem', tag: 'init' })
             ]);
             
             this.target().styleListener(
@@ -54,7 +54,6 @@ mf.comp.Frame = class extends mf.Component {
                 },
                 this
             );
-            
             /* set default option */
             this.size('1rem', '1rem');
         } catch (e) {
@@ -87,10 +86,7 @@ mf.comp.Frame = class extends mf.Component {
      * @return (string) color css value
      */
     accentColor (prm) {
-        try {
-            let ret = this.border().color(prm);
-            return (undefined !== ret) ? ret[0] : ret;
-        } catch (e) {
+        try { return this.effect(['Border', 'init']).color(prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -105,11 +101,12 @@ mf.comp.Frame = class extends mf.Component {
      */
     radius (val, tp) {
         try {
-            let radi = this.effect('Radius');
+            let radi = this.effect(['Radius', 'init']);
             if (undefined === val) {
                 /* getter */
                 return [ radi.value(), radi.type() ];
             }
+            /* setter */
             radi.value(val);
             radi.type(tp);
         } catch (e) {
@@ -125,8 +122,17 @@ mf.comp.Frame = class extends mf.Component {
      * @param p1 (undefined) call as getter
      * @return (string) shadow value
      */
-    shadow (prm) {
-        try { return this.effect('Shadow').value(prm) } catch (e) {
+    shadow (val, clr) {
+        try {
+            let shd = this.effect(['Shadow', 'init']);
+            if (undefined === val) {
+                /* getter */
+                return [ shd.value(), shd.color() ];
+            }
+            /* setter */
+            shd.value(val);
+            shd.color(clr);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -137,8 +143,17 @@ mf.comp.Frame = class extends mf.Component {
      *
      * @return (Border) border effect
      */
-    border () {
-        try { return this.effect('Border'); } catch (e) {
+    border (val, clr) {
+        try {
+            let brd = this.effect(['Border', 'init']);
+            if (undefined === val) {
+                /* getter */
+                return [ brd.width(), brd.color() ];
+            }
+            /* setter */
+            brd.width(val);
+            brd.color(clr);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -209,10 +224,10 @@ mf.comp.Frame = class extends mf.Component {
             if ( (null === siz) || ( ('px' !== siz.type()) && ('rem' !== siz.type()) ) ) {
                 return prm;
             }
-            let bwid = this.border().width()[0];
+            let bwid = this.effect(['Border', 'init']).width();
             
             try {
-                return mf.func.sizeDiff(prm,mf.func.sizeSum(bwid, bwid));
+                return mf.func.sizeDiff(prm, mf.func.sizeSum(bwid, bwid));
             } catch (e) {
                 return prm;
             }
