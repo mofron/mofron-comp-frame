@@ -146,7 +146,7 @@ mf.comp.Frame = class extends mf.Component {
     border (val, clr) {
         try {
             let brd = this.effect(['Border', 'init']);
-            if (undefined === val) {
+            if ( (undefined === val) && (undefined === clr) ) {
                 /* getter */
                 return [ brd.width(), brd.color() ];
             }
