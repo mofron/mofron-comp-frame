@@ -1,6 +1,8 @@
 /**
  * @file   mofron-comp-frame/index.js
  * @brief  frame component for mofron
+ * @feature default size is 1rem × 1rem
+ *          frame size is includes border size
  * @author simpart
  */
 const mf     = require('mofron');
@@ -8,19 +10,20 @@ const Radius = require('mofron-effect-radius');
 const Shadow = require('mofron-effect-shadow');
 const Border = require('mofron-effect-border');
 
+let mod_name = "Frame";
 mf.comp.Frame = class extends mf.Component {
     /**
      * initialize frame component
-     *
-     * @param p1 (object) frame option
-     * @param p1 (string) width css value
-     * @param p2 (string) height css value
+     * 
+     * @param (string (size)) frame width
+     * @param (string (size)) frame height
+     * @type private
      */
     constructor (po, p2) {
         try {
             super();
-            this.name('Frame');
-            this.prmMap(['width', 'height']);
+            this.name(mod_name);
+            this.prmMap(["width", "height"]);
             this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
@@ -29,9 +32,9 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     /**
-     * initialize contents
+     * initialize dom contents
      * 
-     * @note private method
+     * @type private
      */
     initDomConts () {
         try {
@@ -39,13 +42,13 @@ mf.comp.Frame = class extends mf.Component {
             
             /* configure border style */
             this.effect([
-                new Border({ value: '0.01rem', color: [190,190,190], tag: 'init' }),
-                new Radius({ value: '0rem', tag: 'init' }),
-                new Shadow({ value: '0rem', tag: 'init' })
+                new Border({ color: [190,190,190], tag: mod_name }),
+                new Radius({ value: "0rem", tag: mod_name }),
+                new Shadow({ value: "0rem", tag: mod_name })
             ]);
             
             this.target().styleListener(
-                'border-width',
+                "border-width",
                 (p1,p2,p3) => {
                     try { p3.size(this.m_width, this.m_height); } catch (e) {
                         console.error(e.stack);
@@ -54,8 +57,8 @@ mf.comp.Frame = class extends mf.Component {
                 },
                 this
             );
-            /* set default option */
-            this.size('1rem', '1rem');
+            
+            this.size("1rem", "1rem");
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -63,52 +66,52 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     /**
-     * setter/getter background color
+     * background color
      *
-     * @param p1 (string) color css value
-     * @param p1 (Array) [red(0-255), green(0-255), blue(0-255)]
-     * @param p1 (undefined) call as getter
-     * @return (string) color css value
+     * @param (string(color)/array(r,g,b)) background color
+     * @return (string) background color
+     * @type tag parameter
      */
     mainColor (prm) {
-        try { return this.tgtColor('background', prm); } catch (e) {
+        try { return this.tgtColor("background", prm); } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
     /**
-     * setter/getter border color
+     * border color
      *
-     * @param p1 (string) color css value
-     * @param p1 (Array) [red(0-255), green(0-255), blue(0-255)]
-     * @param p1 (undefined) call as getter
-     * @return (string) color css value
+     * @param (string(color)/array(r,g,b)) border color
+     * @return (string) border color
+     * @type tag parameter
      */
     accentColor (prm) {
-        try { return this.effect(['Border', 'init']).color(prm); } catch (e) {
+        try {
+            this.effect(["Shadow", mod_name]).color(prm);
+            return this.effect(["Border", mod_name]).color(prm);
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
     /**
-     * setter/getter radius value
+     * radius effect
      *
-     * @param p1 (string) radius value
-     * @param p1 (undefined) call as getter
-     * @return (string) radius value
+     * @param (string(size)) radius effect value
+     * @return (string(size)) radius effect value
+     * @tag parameter
      */
-    radius (val, tp) {
+    radius (val) {
         try {
-            let radi = this.effect(['Radius', 'init']);
+            let radi = this.effect(["Radius", mod_name]);
             if (undefined === val) {
                 /* getter */
-                return [ radi.value(), radi.type() ];
+                return radi.value();
             }
             /* setter */
             radi.value(val);
-            radi.type(tp);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -116,51 +119,54 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     /**
-     * setter/getter shadow value
+     * shadow effect
      *
-     * @param p1 (string) shadow value
-     * @param p1 (undefined) call as getter
+     * @param (string) shadow value
      * @return (string) shadow value
+     * @type tag parameter
      */
-    shadow (val, clr) {
+    shadow (val) {
         try {
-            let shd = this.effect(['Shadow', 'init']);
+            let shd = this.effect(["Shadow", mod_name]);
             if (undefined === val) {
                 /* getter */
-                return [ shd.value(), shd.color() ];
+                return shd.value();
             }
             /* setter */
             shd.value(val);
-            shd.color(clr);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    /**
-     * getter border effect
-     *
-     * @return (Border) border effect
-     */
-    border (val, clr) {
-        try {
-            let brd = this.effect(['Border', 'init']);
-            if ( (undefined === val) && (undefined === clr) ) {
-                /* getter */
-                return [ brd.width(), brd.color() ];
-            }
-            /* setter */
-            brd.width(val);
-            brd.color(clr);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
+    ///**
+    // * getter border effect
+    // *
+    // * @return (Border) border effect
+    // */
+    //border (val) {
+    //    try {
+    //        let brd = this.effect(['Border', 'init']);
+    //        if ( (undefined === val) && (undefined === clr) ) {
+    //            /* getter */
+    //            return [ brd.width(), brd.color() ];
+    //        }
+    //        /* setter */
+    //        brd.width(val);
+    //        brd.color(clr);
+     //   } catch (e) {
+    //        console.error(e.stack);
+    //        throw e;
+    //    }
+    //}
     
     /**
-     * setter/getter frame width
+     * frame width
+     * 
+     * @param (string(size)) frame width
+     * @return (string(size)) frame width
+     * @type tag parameter
      */
     width (prm) {
         try {
@@ -185,7 +191,11 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     /**
-     * setter/getter frame height
+     * frame height
+     * 
+     * @param (string(size)) frame height
+     * @return (string(size)) frame height
+     * @type tag parameter
      */
     height (prm) {
         try {
@@ -211,9 +221,11 @@ mf.comp.Frame = class extends mf.Component {
     
     /**
      * frame size getter
-     * return frame size without border width
      *
-     * @note private method
+     * @param (string(size)) frame size
+     * @return frame size without border width
+     *
+     * @type private
      */
     frmSize (prm) {
         try {
@@ -224,7 +236,7 @@ mf.comp.Frame = class extends mf.Component {
             if ( (null === siz) || ( ('px' !== siz.type()) && ('rem' !== siz.type()) ) ) {
                 return prm;
             }
-            let bwid = this.effect(['Border', 'init']).width();
+            let bwid = this.effect(['Border', mod_name]).width();
             
             try {
                 return mf.func.sizeDiff(prm, mf.func.sizeSum(bwid, bwid));
