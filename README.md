@@ -27,4 +27,4 @@ npm install mofron mofron-comp-frame
 |                 | radius             | string(size)                       | radius effect value                    |
 |                 | shadow             | string(size)                       | shadow effect value                    |
 |       ◯         | width              | string(size)                       | frame width                            |
-|                 | height             | string(size)                       | frame height                           |
+|       ◯         | height             | string(size)                       | frame height                           |
