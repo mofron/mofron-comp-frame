@@ -106,7 +106,7 @@ mf.comp.Frame = class extends mf.Component {
      *
      * @param (string (size)) radius effect value
      * @return (string (size)) radius effect value
-     * @tag parameter
+     * @type parameter
      */
     radius (val) {
         try {
@@ -207,9 +207,8 @@ mf.comp.Frame = class extends mf.Component {
     /**
      * frame size getter
      *
-     * @param (string(size)) frame size
-     * @return frame size without border width
-     *
+     * @param (string (size)) frame size
+     * @return (string (size)) frame size without border width
      * @type private
      */
     frmSize (prm) {
