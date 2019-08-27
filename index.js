@@ -15,8 +15,9 @@ mf.comp.Frame = class extends mf.Component {
     /**
      * initialize frame component
      * 
-     * @param (string (size)) frame width
-     * @param (string (size)) frame height
+     * @param (mixed) width parameter
+     *                object: component option
+     * @param (string (size)) height parameter
      * @type private
      */
     constructor (po, p2) {
@@ -67,13 +68,16 @@ mf.comp.Frame = class extends mf.Component {
     
     /**
      * background color
-     *
-     * @param (string(color)/array(r,g,b)) background color
+     * 
+     * @param (mixed (color)) string: background color name, #hex
+     *                        array: [red, green, blue, (alpha)]
      * @return (string) background color
-     * @type tag parameter
+     * @type parameter
      */
-    mainColor (prm) {
-        try { return this.tgtColor("background", prm); } catch (e) {
+    mainColor (prm, opt) {
+        try {
+	    return mf.func.cmpColor(this, "background", [prm,opt]);
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -81,12 +85,13 @@ mf.comp.Frame = class extends mf.Component {
     
     /**
      * border color
-     *
-     * @param (string(color)/array(r,g,b)) border color
+     * 
+     * @param (mixed (color)) string: border color name, #hex
+     *                        array: [red, green, blue, (alpha)]
      * @return (string) border color
-     * @type tag parameter
+     * @type parameter
      */
-    accentColor (prm) {
+    accentColor (prm, opt) {
         try {
             this.effect(["Shadow", mod_name]).color(prm);
             return this.effect(["Border", mod_name]).color(prm);
@@ -99,8 +104,8 @@ mf.comp.Frame = class extends mf.Component {
     /**
      * radius effect
      *
-     * @param (string(size)) radius effect value
-     * @return (string(size)) radius effect value
+     * @param (string (size)) radius effect value
+     * @return (string (size)) radius effect value
      * @tag parameter
      */
     radius (val) {
@@ -121,9 +126,9 @@ mf.comp.Frame = class extends mf.Component {
     /**
      * shadow effect
      *
-     * @param (string) shadow value
-     * @return (string) shadow value
-     * @type tag parameter
+     * @param (string (size)) shadow value
+     * @return (string (size)) shadow value
+     * @type parameter
      */
     shadow (val) {
         try {
@@ -140,35 +145,14 @@ mf.comp.Frame = class extends mf.Component {
         }
     }
     
-    ///**
-    // * getter border effect
-    // *
-    // * @return (Border) border effect
-    // */
-    //border (val) {
-    //    try {
-    //        let brd = this.effect(['Border', 'init']);
-    //        if ( (undefined === val) && (undefined === clr) ) {
-    //            /* getter */
-    //            return [ brd.width(), brd.color() ];
-    //        }
-    //        /* setter */
-    //        brd.width(val);
-    //        brd.color(clr);
-     //   } catch (e) {
-    //        console.error(e.stack);
-    //        throw e;
-    //    }
-    //}
-    
     /**
      * frame width
      * 
-     * @param (string(size)) frame width
-     * @return (string(size)) frame width
-     * @type tag parameter
+     * @param (string (size)) frame width
+     * @return (string (size)) frame width
+     * @type parameter
      */
-    width (prm) {
+    width (prm, opt) {
         try {
             if (undefined === prm) {
                 /* getter */
@@ -183,7 +167,7 @@ mf.comp.Frame = class extends mf.Component {
             if (0 > fsiz.value()) {
                 fsiz.value(0);
             }
-            return super.width(fsiz.toString());
+            return super.width(fsiz.toString(), opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -193,11 +177,12 @@ mf.comp.Frame = class extends mf.Component {
     /**
      * frame height
      * 
-     * @param (string(size)) frame height
-     * @return (string(size)) frame height
-     * @type tag parameter
+     * @param (string (size)) frame height
+     * @param (option) style option
+     * @return (string (size)) frame height
+     * @type parameter
      */
-    height (prm) {
+    height (prm, opt) {
         try {
             if (undefined === prm) {
                 /* getter */
@@ -212,7 +197,7 @@ mf.comp.Frame = class extends mf.Component {
             if (0 > fsiz.value()) {
                 fsiz.value(0);
             }
-            return super.height(fsiz.toString());
+            return super.height(fsiz.toString(), opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
