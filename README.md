@@ -15,23 +15,25 @@ npm install mofron   mofron-comp-frame
 # Sample
 ```html
 <require>
-    <tag module="mofron-comp-frame">Frame</tag>
+    <tag load="mofron-comp-frame">Frame</tag>
 </require>
 
-<Frame size="2rem","1.5rem" color="#f0e6fa">
-</Frame>
+<Frame size=(2rem,1.5rem) color="#f0e6fa"></Frame>
 ```
+
 # Parameter
 
-|Simple<br>Param | Parameter Name | Type | Description |
-|:--------------:|:---------------|:-----|:------------|
+| Short<br>Form | Parameter Name | Type | Description |
+|:-------------:|:---------------|:-----|:------------|
 | | mainColor | mixed (color) | string: background color name, #hex |
 | | | | array: [red, green, blue, (alpha)] |
+| | | key-value | style option |
 | | accentColor | mixed (color) | string: border color name, #hex |
 | | | | array: [red, green, blue, (alpha)] |
 | | radius | string (size) | radius effect value |
 | | shadow | string (size) | shadow value |
-| | width | string (size) | frame width |
-| | height | string (size) | frame height |
-| | | option | style option |
+| ◯  | width | string (size) | frame width |
+| | | key-value | style option |
+| ◯  | height | string (size) | frame height |
+| | | key-value | style option |
 

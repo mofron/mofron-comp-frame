@@ -3,29 +3,34 @@
  * @brief  frame component for mofron
  * @feature default size is 1rem × 1rem
  *          frame size is includes border size
- * @author simpart
+ * @license MIT
  */
-const mf     = require('mofron');
 const Radius = require('mofron-effect-radius');
 const Shadow = require('mofron-effect-shadow');
 const Border = require('mofron-effect-border');
+const comutl = mofron.util.common;
+const cmputl = mofron.util.component;
 
-let mod_name = "Frame";
-mf.comp.Frame = class extends mf.Component {
+module.exports = class extends mofron.class.Component {
     /**
      * initialize frame component
      * 
      * @param (mixed) width parameter
-     *                object: component option
+     *                key-value: component option
      * @param (string (size)) height parameter
+     * @short width,height
      * @type private
      */
-    constructor (po, p2) {
+    constructor (p1, p2) {
         try {
             super();
-            this.name(mod_name);
-            this.prmMap(["width", "height"]);
-            this.prmOpt(po, p2);
+            this.name("Frame");
+            this.shortForm("width", "height");
+            
+	    /* set config */
+	    if (0 < arguments.length) {
+                this.config(p1, p2);
+	    }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -43,18 +48,21 @@ mf.comp.Frame = class extends mf.Component {
             
             /* configure border style */
             this.effect([
-                new Border({ color: [190,190,190], tag: mod_name }),
-                new Radius({ value: "0rem", tag: mod_name }),
-                new Shadow({ value: "0rem", tag: mod_name })
+                new Border({ color: [190,190,190] }),new Radius("0rem"), new Shadow("0rem")
             ]);
             
-            this.target().styleListener(
+            this.childDom().style().listener(
                 "border-width",
                 (p1,p2,p3) => {
-                    try { p3.size(this.m_width, this.m_height); } catch (e) {
-                        console.error(e.stack);
-                        throw e;
-                    }
+                    try {
+                        let wid = cmputl.size(p3, "width");
+			let hei = cmputl.size(p3, "height");
+                        if (null !== p2) {
+                            wid = comutl.sizesum(wid, p2);
+			    hei = comutl.sizesum(hei, p2);
+			}
+                        p3.size(wid, hei);
+	            } catch (e) {}
                 },
                 this
             );
@@ -71,12 +79,13 @@ mf.comp.Frame = class extends mf.Component {
      * 
      * @param (mixed (color)) string: background color name, #hex
      *                        array: [red, green, blue, (alpha)]
+     * @param (key-value) style option
      * @return (string) background color
      * @type parameter
      */
     mainColor (prm, opt) {
         try {
-	    return mf.func.cmpColor(this, "background", [prm,opt]);
+	    return cmputl.color(this, "background", prm, opt);
 	} catch (e) {
             console.error(e.stack);
             throw e;
@@ -88,13 +97,13 @@ mf.comp.Frame = class extends mf.Component {
      * 
      * @param (mixed (color)) string: border color name, #hex
      *                        array: [red, green, blue, (alpha)]
-     * @return (string) border color
+     * @return (mixed (color)) border color
      * @type parameter
      */
     accentColor (prm, opt) {
         try {
-            this.effect(["Shadow", mod_name]).color(prm);
-            return this.effect(["Border", mod_name]).color(prm);
+            this.effect({ name: "Shadow" }).color(prm);
+            return this.effect({ name: "Border" }).color(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -108,15 +117,9 @@ mf.comp.Frame = class extends mf.Component {
      * @return (string (size)) radius effect value
      * @type parameter
      */
-    radius (val) {
+    radius (prm) {
         try {
-            let radi = this.effect(["Radius", mod_name]);
-            if (undefined === val) {
-                /* getter */
-                return radi.value();
-            }
-            /* setter */
-            radi.value(val);
+            return this.effect({ name: "Radius" }).value(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -130,15 +133,9 @@ mf.comp.Frame = class extends mf.Component {
      * @return (string (size)) shadow value
      * @type parameter
      */
-    shadow (val) {
+    shadow (prm) {
         try {
-            let shd = this.effect(["Shadow", mod_name]);
-            if (undefined === val) {
-                /* getter */
-                return shd.value();
-            }
-            /* setter */
-            shd.value(val);
+            return this.effect({ name: "Shadow" }).value(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -149,25 +146,13 @@ mf.comp.Frame = class extends mf.Component {
      * frame width
      * 
      * @param (string (size)) frame width
+     * @param (key-value) style option
      * @return (string (size)) frame width
      * @type parameter
      */
     width (prm, opt) {
         try {
-            if (undefined === prm) {
-                /* getter */
-                return super.width();
-            }
-            /* setter */
-            if (null === prm) {
-                super.width(prm);
-                return;
-            }
-            let fsiz = mf.func.getSize(this.frmSize(prm));
-            if (0 > fsiz.value()) {
-                fsiz.value(0);
-            }
-            return super.width(fsiz.toString(), opt);
+	    return this.frmsiz("width", prm, opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -178,26 +163,13 @@ mf.comp.Frame = class extends mf.Component {
      * frame height
      * 
      * @param (string (size)) frame height
-     * @param (option) style option
+     * @param (key-value) style option
      * @return (string (size)) frame height
      * @type parameter
      */
     height (prm, opt) {
         try {
-            if (undefined === prm) {
-                /* getter */
-                return super.height();
-            }
-            /* setter */
-            if (null === prm) {
-                super.height(prm);
-                return;
-            }
-            let fsiz = mf.func.getSize(this.frmSize(prm));
-            if (0 > fsiz.value()) {
-                fsiz.value(0);
-            }
-            return super.height(fsiz.toString(), opt);
+	    return this.frmsiz("height", prm, opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -205,33 +177,29 @@ mf.comp.Frame = class extends mf.Component {
     }
     
     /**
-     * frame size getter
-     *
-     * @param (string (size)) frame size
-     * @return (string (size)) frame size without border width
+     * set frame size
+     * 
+     * @param (string) size target (width,height)
      * @type private
      */
-    frmSize (prm) {
+    frmsiz (tgt, val, opt) {
         try {
-            if (undefined === prm) {
-                return;
-            }
-            let siz = mf.func.getSize(prm);
-            if ( (null === siz) || ( ('px' !== siz.type()) && ('rem' !== siz.type()) ) ) {
-                return prm;
-            }
-            let bwid = this.effect(['Border', mod_name]).width();
-            
-            try {
-                return mf.func.sizeDiff(prm, mf.func.sizeSum(bwid, bwid));
-            } catch (e) {
-                return prm;
-            }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
+	    if (("width" !== tgt) && ("height" !== tgt)) {
+                throw new Error("invalid parameter");
+	    }
+	    let bdr_siz = comutl.sizesum(
+	                      cmputl.size(this, "border-width"),
+			      cmputl.size(this, "border-width")
+			  );
+            if (undefined === val) {
+                /* getter */
+		return comutl.sizesum(super[tgt](), bdr_siz);
+	    }
+            /* setter */
+            super[tgt](comutl.sizesum(val, (null === bdr_siz) ? null :  "-" + bdr_siz));
+	} catch (e) {
+            return super[tgt](val);
+	}
     }
 }
-module.exports = mofron.comp.Frame;
 /* end of file */

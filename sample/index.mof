@@ -1,6 +1,5 @@
 <require>
-    <tag module="mofron-comp-frame">Frame</tag>
+    <tag load="mofron-comp-frame">Frame</tag>
 </require>
 
-<Frame size="2rem","1.5rem" color="#f0e6fa">
-</Frame>
+<Frame size=(2rem,1.5rem) color="#f0e6fa"></Frame>
