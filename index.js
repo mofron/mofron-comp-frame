@@ -55,13 +55,11 @@ module.exports = class extends mofron.class.Component {
                 "border-width",
                 (p1,p2,p3) => {
                     try {
-                        let wid = cmputl.size(p3, "width");
-			let hei = cmputl.size(p3, "height");
-                        if (null !== p2) {
-                            wid = comutl.sizesum(wid, p2);
-			    hei = comutl.sizesum(hei, p2);
-			}
-                        p3.size(wid, hei);
+		        let o_bdr = comutl.sizesum(p2,p2);
+		        p3.size(
+                            comutl.sizesum(cmputl.size(p3,"width"), o_bdr),
+			    comutl.sizesum(cmputl.size(p3,"height"), o_bdr),
+			);
 	            } catch (e) {}
                 },
                 this
