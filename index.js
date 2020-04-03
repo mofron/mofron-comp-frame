@@ -48,7 +48,8 @@ module.exports = class extends mofron.class.Component {
             
             /* configure border style */
             this.effect([
-                new Border({ color: [190,190,190] }),new Radius("0rem"), new Shadow("0rem")
+                new Border({ color: [190,190,190], tag: "Frame" }),
+		new Radius("0rem"), new Shadow("0rem")
             ]);
             
             this.childDom().style().listener(
@@ -185,10 +186,8 @@ module.exports = class extends mofron.class.Component {
 	    if (("width" !== tgt) && ("height" !== tgt)) {
                 throw new Error("invalid parameter");
 	    }
-	    let bdr_siz = comutl.sizesum(
-	                      cmputl.size(this, "border-width"),
-			      cmputl.size(this, "border-width")
-			  );
+	    let bdr_siz = this.effect({ name: "Border", tag: "Frame" }).width();
+	    bdr_siz = comutl.sizesum(bdr_siz, bdr_siz);
             if (undefined === val) {
                 /* getter */
 		return comutl.sizesum(super[tgt](), bdr_siz);
