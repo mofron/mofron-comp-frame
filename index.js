@@ -142,6 +142,30 @@ module.exports = class extends mofron.class.Component {
     }
     
     /**
+     * border width setter
+     * 
+     * @param (string(size)) top border width
+     * @param (string(size)) right border width
+     * @param (string(size)) bottom border width
+     * @param (string(size)) left border width
+     * @type parameter
+     */
+    borderWidth (top, right, bottom, left) {
+        try {
+	    this.style({ "border-width": null }, {lock: true});
+            this.style({
+                "border-top-width"    : top,
+                "border-right-width"  : right,
+		"border-bottom-width" : bottom,
+		"border-left-width"   : left
+	    });
+	} catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
      * frame width
      * 
      * @param (string (size)) frame width

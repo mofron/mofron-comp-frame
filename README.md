@@ -32,6 +32,10 @@ npm install mofron   mofron-comp-frame
 | | | | array: [red, green, blue, (alpha)] |
 | | radius | string (size) | radius effect value |
 | | shadow | string (size) | shadow value |
+| | borderWidth | string(size) | top border width |
+| | | string(size) | right border width |
+| | | string(size) | bottom border width |
+| | | string(size) | left border width |
 | ◯  | width | string (size) | frame width |
 | | | key-value | style option |
 | ◯  | height | string (size) | frame height |
