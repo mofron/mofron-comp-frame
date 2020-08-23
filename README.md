@@ -14,9 +14,9 @@ npm install mofron   mofron-comp-frame
 
 # Sample
 ```html
-<require>
+<setting>
     <tag load="mofron-comp-frame">Frame</tag>
-</require>
+</setting>
 
 <Frame size=(2rem,1.5rem) color="#f0e6fa"></Frame>
 ```

@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-frame",
-  "version": "0.12.4",
+  "version": "0.13.0",
   "description": "frame component for mofron",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "mofron-effect-border": ""
   },
   "keywords": [
-    "front-end"
+    "front-end","mofron"
   ],
   "author": "simparts",
   "license": "MIT",
