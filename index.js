@@ -24,7 +24,7 @@ module.exports = class extends mofron.class.Component {
     constructor (p1, p2) {
         try {
             super();
-            this.name("Frame");
+            this.modname("Frame");
             this.shortForm("width", "height");
             
 	    /* set config */
@@ -101,8 +101,8 @@ module.exports = class extends mofron.class.Component {
      */
     accentColor (prm, opt) {
         try {
-            this.effect({ name: "Shadow" }).color(prm);
-            return this.effect({ name: "Border" }).color(prm);
+            this.effect({ modname: "Shadow" }).color(prm);
+            return this.effect({ modname: "Border" }).color(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -118,7 +118,7 @@ module.exports = class extends mofron.class.Component {
      */
     radius (prm) {
         try {
-            return this.effect({ name: "Radius" }).value(prm);
+            return this.effect({ modname: "Radius" }).value(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -134,7 +134,7 @@ module.exports = class extends mofron.class.Component {
      */
     shadow (prm) {
         try {
-            return this.effect({ name: "Shadow" }).value(prm);
+            return this.effect({ modname: "Shadow" }).value(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
