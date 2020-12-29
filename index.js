@@ -46,11 +46,12 @@ module.exports = class extends mofron.class.Component {
         try {
             super.initDomConts();
             
+	    let pvt = { private:true };
             /* configure border style */
             this.effect([
                 new Border({ color: [190,190,190], tag: "Frame" }),
 		new Radius("0rem"), new Shadow("0rem")
-            ]);
+            ],pvt);
             
             this.childDom().style().listener(
                 "border-width",
@@ -65,8 +66,8 @@ module.exports = class extends mofron.class.Component {
                 },
                 this
             );
-            
-            this.size("1rem", "1rem");
+            this.width("1rem",pvt);
+	    this.height("1rem",pvt);
         } catch (e) {
             console.error(e.stack);
             throw e;
