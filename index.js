@@ -153,13 +153,16 @@ module.exports = class extends mofron.class.Component {
      */
     borderWidth (top, right, bottom, left) {
         try {
-	    this.style({ "border-width": null }, {lock: true});
-            this.style({
-                "border-top-width"    : top,
-                "border-right-width"  : right,
-		"border-bottom-width" : bottom,
-		"border-left-width"   : left
-	    });
+	    if (1 === arguments.length) {
+                this.effect({ modname: "Border" }).width(top);
+	    } else {
+                this.style({
+                    "border-top-width"    : top,
+                    "border-right-width"  : right,
+		    "border-bottom-width" : bottom,
+		    "border-left-width"   : left
+	        }, { locked:true });
+            }
 	} catch (e) {
             console.error(e.stack);
             throw e;
