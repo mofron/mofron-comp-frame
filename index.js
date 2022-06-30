@@ -135,7 +135,7 @@ module.exports = class extends mofron.class.Component {
      */
     shadow (prm) {
         try {
-            return this.effect({ modname: "Shadow" }).value(prm);
+            return this.effect({ modname: "Shadow" }).blur(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
