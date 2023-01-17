@@ -50,7 +50,7 @@ module.exports = class extends mofron.class.Component {
             /* configure border style */
             this.effect([
                 new Border({ color: [190,190,190], tag: "Frame" }),
-		new Radius("0rem"), new Shadow("0rem")
+		new Radius("0rem"), new Shadow({ suspend:true })
             ],pvt);
             
             this.childDom().style().listener(
@@ -135,7 +135,14 @@ module.exports = class extends mofron.class.Component {
      */
     shadow (prm) {
         try {
-            return this.effect({ modname: "Shadow" }).blur(prm);
+	    if (undefined === prm) {
+                return this.effect({ modname: "Shadow" }).blur();
+	    }
+	    let shadow = this.effect({ modname: "Shadow" });
+	    shadow.suspend(false);
+	    shadow.value(comutl.sizesum(prm, prm));
+	    shadow.blur(prm);
+            //return this.effect({ modname: "Shadow" }).blur(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -156,12 +163,13 @@ module.exports = class extends mofron.class.Component {
 	    if (1 === arguments.length) {
                 this.effect({ modname: "Border" }).width(top);
 	    } else {
+	        this.style({ 'border-width':null }, { lock:true });
                 this.style({
                     "border-top-width"    : top,
                     "border-right-width"  : right,
 		    "border-bottom-width" : bottom,
 		    "border-left-width"   : left
-	        }, { locked:true });
+	        }, { lock:true });
             }
 	} catch (e) {
             console.error(e.stack);
