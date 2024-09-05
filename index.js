@@ -133,15 +133,24 @@ module.exports = class extends mofron.class.Component {
      * @return (string (size)) shadow value
      * @type parameter
      */
-    shadow (prm) {
+    shadow (prm, clr) {
         try {
 	    if (undefined === prm) {
                 return this.effect({ modname: "Shadow" }).blur();
 	    }
 	    let shadow = this.effect({ modname: "Shadow" });
 	    shadow.suspend(false);
-	    shadow.value(comutl.sizesum(prm, prm));
-	    shadow.blur(prm);
+	    shadow.value(prm);
+            let blur_siz = comutl.getsize(prm);
+	    blur_siz.value(blur_siz.value()*5);
+	    shadow.blur(blur_siz);
+            if (undefined !== clr) {
+                shadow.color(clr);
+	    }
+
+	    if (true === this.isExists()) {
+                shadow.execute();
+	    }
             //return this.effect({ modname: "Shadow" }).blur(prm);
         } catch (e) {
             console.error(e.stack);
@@ -173,6 +182,15 @@ module.exports = class extends mofron.class.Component {
             }
 	} catch (e) {
             console.error(e.stack);
+            throw e;
+        }
+    }
+
+    borderColor (prm) {
+        try {
+            return this.effect({ modname: "Border" }).color(prm);
+        } catch (e) {
+	    console.error(e.stack);
             throw e;
         }
     }
