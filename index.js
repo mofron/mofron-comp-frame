@@ -180,6 +180,9 @@ module.exports = class extends mofron.class.Component {
 		    "border-left-width"   : left
 	        }, { lock:true });
             }
+	    if (true === this.isExists()) {
+                this.effect({ modname: "Border" }).execute();
+	    }
 	} catch (e) {
             console.error(e.stack);
             throw e;
@@ -188,7 +191,13 @@ module.exports = class extends mofron.class.Component {
 
     borderColor (prm) {
         try {
-            return this.effect({ modname: "Border" }).color(prm);
+            let ret = this.effect({ modname: "Border" }).color(prm);
+            if (undefined === prm) {
+                return ret;
+	    }
+            if (true === this.isExists()) {
+                this.effect({ modname: "Border" }).execute();
+            }
         } catch (e) {
 	    console.error(e.stack);
             throw e;
